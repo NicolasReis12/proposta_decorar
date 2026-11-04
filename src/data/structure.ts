@@ -50,7 +50,7 @@ export const screens: Screen[] = [
   { n: 20, chapter: "c4", eyebrow: "Linhas editoriais", title: "Social media: seis frentes integradas" },
   { n: 21, chapter: "c4", eyebrow: "Biblioteca audiovisual · anúncios", title: "Seis vídeos para tráfego pago" },
   { n: 22, chapter: "c4", eyebrow: "Biblioteca audiovisual · marca", title: "Seis vídeos orgânicos" },
-  { n: 23, chapter: "c4", eyebrow: "Espaços reservados", title: "Três vídeos selecionados" },
+  { n: 23, chapter: "c4", eyebrow: "Ideias para o perfil", title: "3 sugestões de vídeos para o perfil" },
   { n: 24, chapter: "c4", eyebrow: "Gravação · 05/11", title: "Planejamento de captação" },
   { n: 25, chapter: "c5", eyebrow: "Aquisição + remarketing", title: "Tráfego pago: evolução da operação" },
   { n: 26, chapter: "c5", eyebrow: "Neuromarketing no ponto de venda", title: "Showroom: experiência que confirma a promessa" },

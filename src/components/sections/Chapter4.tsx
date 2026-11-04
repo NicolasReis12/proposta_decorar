@@ -1,6 +1,6 @@
 import { CalendarCheck } from "lucide-react";
 import Screen from "@/components/ui/Screen";
-import { Callout, Lead, Note, Subhead } from "@/components/ui/primitives";
+import { Callout, Lead, Subhead } from "@/components/ui/primitives";
 import { CaptureChecklist, PillarExplorer, VideoSlots } from "@/components/interactive/Content";
 import ScriptLibrary from "@/components/interactive/ScriptLibrary";
 import { organicScripts, rhythm, trafficScripts } from "@/data/conteudo";
@@ -49,18 +49,10 @@ export default function Chapter4() {
 
       {/* 23 — Três vídeos */}
       <Screen n={23} tone="dark">
-        <Subhead dark>Três materiais selecionados, prontos para serem exibidos na reunião.</Subhead>
-        <Lead dark className="mt-3 mb-10">
-          Os vídeos são carregados da pasta <code className="text-sky">public/videos</code>. Se um arquivo ainda não estiver lá, o espaço aparece reservado — sem quebrar a
-          apresentação.
-        </Lead>
+        <Subhead dark>Três sugestões de vídeos para apresentar a marca, os produtos e os ambientes da Decorar.</Subhead>
         <div className="mx-auto w-full max-w-[920px]">
           <VideoSlots />
         </div>
-        <Note dark>
-          Para substituir: salve o arquivo como video-01.mp4, video-02.mp4 ou video-03.mp4 em public/videos. A prévia local serve apenas para testar um arquivo no
-          navegador e não é incorporada ao site.
-        </Note>
       </Screen>
 
       {/* 24 — Captação */}

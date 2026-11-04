@@ -190,7 +190,16 @@ export function Chapter6() {
         tone="dark"
         background={
           <>
-            <Image src="/images/sofa-4.jpg" alt="" fill sizes="100vw" className="object-cover opacity-30" />
+            <video
+              src="/videos/video-lp1.mp4"
+              autoPlay
+              muted
+              loop
+              playsInline
+              preload="metadata"
+              aria-hidden
+              className="absolute inset-x-0 top-[7.5%] h-[85%] w-full object-cover opacity-30"
+            />
             <div className="absolute inset-0 bg-gradient-to-r from-navy via-navy/90 to-navy/50" />
             <BrandSymbol variant="branco" className="pointer-events-none absolute -right-32 -bottom-40 w-[620px] opacity-[0.05]" />
           </>

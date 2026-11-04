@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { CheckSquare, FolderOpen, Play, RotateCcw, Square } from "lucide-react";
+import { CheckSquare, Play, RotateCcw, Square } from "lucide-react";
 import { captureGroups, pillars, selectedVideos } from "@/data/conteudo";
 import { usePersistentChecks } from "@/components/ui/hooks";
 
@@ -44,13 +44,7 @@ type Status = "loading" | "ready" | "missing";
 
 function VideoSlot({ slot, title, src, caption }: { slot: string; title: string; src: string; caption: string }) {
   const [status, setStatus] = useState<Status>("loading");
-  const [localUrl, setLocalUrl] = useState<string | null>(null);
-  const [localName, setLocalName] = useState("");
   const ref = useRef<HTMLVideoElement>(null);
-
-  useEffect(() => () => {
-    if (localUrl) URL.revokeObjectURL(localUrl);
-  }, [localUrl]);
 
   // Se o arquivo já falhou antes da hidratação, o evento onError pode ter sido perdido
   useEffect(() => {
@@ -59,7 +53,7 @@ function VideoSlot({ slot, title, src, caption }: { slot: string; title: string;
     else if (v && v.readyState >= 1) setStatus("ready");
   }, []);
 
-  const showVideo = localUrl || status !== "missing";
+  const showVideo = status !== "missing";
 
   return (
     <div className="flex flex-col">
@@ -67,17 +61,16 @@ function VideoSlot({ slot, title, src, caption }: { slot: string; title: string;
         {showVideo && (
           <video
             ref={ref}
-            key={localUrl ?? src}
-            src={localUrl ?? src}
+            src={src}
             controls
             playsInline
             preload="metadata"
             onLoadedMetadata={() => setStatus("ready")}
-            onError={() => !localUrl && setStatus("missing")}
-            className={`absolute inset-0 h-full w-full object-contain ${status === "ready" || localUrl ? "opacity-100" : "opacity-0"}`}
+            onError={() => setStatus("missing")}
+            className={`absolute inset-0 h-full w-full object-contain ${status === "ready" ? "opacity-100" : "opacity-0"}`}
           />
         )}
-        {!localUrl && status !== "ready" && (
+        {status !== "ready" && (
           <div className="absolute inset-0 flex flex-col items-center justify-center gap-4 p-6 text-center">
             <span className="flex h-16 w-16 items-center justify-center rounded-full border border-white/25 text-white/80">
               <Play size={26} className="ml-1" />
@@ -97,22 +90,6 @@ function VideoSlot({ slot, title, src, caption }: { slot: string; title: string;
         {title}
         {caption && <span className="font-normal text-mute"> · {caption}</span>}
       </p>
-      <label className="no-print mt-2 inline-flex cursor-pointer items-center justify-center gap-2 rounded-lg border border-white/15 bg-white/[0.06] px-3 py-2 text-xs font-semibold text-white/85 hover:border-sky">
-        <FolderOpen size={14} /> {localName ? "Trocar prévia local" : "Pré-visualizar arquivo local"}
-        <input
-          type="file"
-          accept="video/*"
-          className="sr-only"
-          onChange={(e) => {
-            const f = e.target.files?.[0];
-            if (!f) return;
-            if (localUrl) URL.revokeObjectURL(localUrl);
-            setLocalUrl(URL.createObjectURL(f));
-            setLocalName(f.name);
-          }}
-        />
-      </label>
-      {localName && <p className="mt-1 truncate text-[11px] text-white/50">Prévia: {localName} (não é salvo no site)</p>}
       <span className="sr-only">Slot {slot}</span>
     </div>
   );
