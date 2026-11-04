@@ -1,0 +1,13 @@
+node_modules
+.next
+out
+.vercel
+*.tsbuildinfo
+next-env.d.ts
+
+# Arquivos originais de trabalho (cópias já estão em /public)
+/images
+/videos
+/css
+/fonts
+/logo

@@ -1,0 +1,120 @@
+@import "tailwindcss";
+
+/*
+  Identidade visual — Caio Marketeiro · Neuromarketing
+  Paleta oficial: Azul Navy #05192C · Azul Origem #145180 · Azul Sky #508EBA · Branco · Preto
+  Tipografia oficial: Tosh A (títulos) e Gotham (texto).
+  Se os arquivos das fontes forem instalados (ex.: public/fonts + @font-face),
+  eles passam a ser usados automaticamente; até lá, Sora e Montserrat são os substitutos.
+*/
+
+@theme {
+  --color-navy: #05192c;
+  --color-navy-2: #0a2239;
+  --color-navy-3: #0f2d4a;
+  --color-origem: #145180;
+  --color-sky: #508eba;
+  --color-sky-soft: #dbe8f2;
+  --color-paper: #f3f5f8;
+  --color-mist: #e8eef4;
+  --color-line: #d8e1ea;
+  --color-ink: #05192c;
+  --color-mute: #50606f;
+  --color-mute-dark: #a9bccd;
+
+  --font-display: "Tosh A", var(--font-sora), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Gotham", var(--font-montserrat), ui-sans-serif, system-ui, sans-serif;
+  --font-serif: var(--font-cormorant), Georgia, serif;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}
+
+body {
+  background: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+::selection { background: var(--color-sky); color: white; }
+
+:focus-visible {
+  outline: 2px solid var(--color-sky);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+.screen { scroll-margin-top: 64px; }
+
+/* Faixa de grão sutil para fundos escuros */
+.grain::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.05;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+}
+
+.brand-gradient { background: linear-gradient(160deg, #05192c 0%, #0f3a5f 55%, #508eba 130%); }
+.text-gradient {
+  background: linear-gradient(90deg, #ffffff 0%, #a9cbe4 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Sliders do simulador */
+.range {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 6px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--color-sky) var(--p, 50%), rgba(255, 255, 255, 0.15) var(--p, 50%));
+  cursor: pointer;
+}
+.range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: white;
+  border: 4px solid var(--color-sky);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
+}
+.range::-moz-range-thumb {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: white;
+  border: 4px solid var(--color-sky);
+}
+
+@keyframes grow-x { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+.bar-grow { transform-origin: left; animation: grow-x 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) both; }
+
+@keyframes fade-up { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+.fade-up { animation: fade-up 0.45s ease both; }
+
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { scrollbar-width: none; }
+
+/* Impressão / PDF: uma tela por página, sem navegação */
+@media print {
+  @page { size: A4 landscape; margin: 10mm; }
+  body { background: white !important; }
+  .no-print { display: none !important; }
+  .print-shift { margin-left: 0 !important; padding-top: 0 !important; }
+  .screen { break-after: page; min-height: 0 !important; box-shadow: none !important; }
+  .print-open [data-print-hidden] { display: block !important; }
+  * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+}

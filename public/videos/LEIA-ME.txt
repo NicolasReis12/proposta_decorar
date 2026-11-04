@@ -1,0 +1,16 @@
+PASTA DE VÍDEOS — Tela 23 "Três vídeos selecionados"
+=====================================================
+
+Coloque aqui os três vídeos com EXATAMENTE estes nomes:
+
+  video-01.mp4   ->  Vídeo 01
+  video-02.mp4   ->  Vídeo 02
+  video-03.mp4   ->  Vídeo 03
+
+- Formato recomendado: MP4 (H.264), vertical 9:16, até ~20 MB cada.
+- Se um arquivo não existir, a apresentação mostra um espaço reservado (não quebra).
+- Para trocar títulos/legendas ou usar outros nomes de arquivo, edite
+  src/data/conteudo.ts  ->  selectedVideos
+- Depois de adicionar os arquivos, faça novo deploy (git push / vercel).
+
+Obs.: video-01.mp4 foi copiado de videos/video-lp1.mp4, que já estava na pasta do projeto.
