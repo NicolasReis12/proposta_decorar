@@ -42,4 +42,4 @@ Sora e Montserrat. Para ativar as oficiais, coloque os `.woff2` em `public/fonts
 
 ## Atalhos durante a apresentação
 
-`←` `→` telas · `Home`/`End` início/fim · `Ctrl K` ou `/` busca de telas · botão de impressora gera PDF.
+`←` `→` telas · `Home`/`End` início/fim · `M` mostra/esconde o menu lateral · `Ctrl K` ou `/` busca de telas · botão de impressora gera PDF.

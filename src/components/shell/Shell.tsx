@@ -2,13 +2,30 @@
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import Image from "next/image";
-import { ArrowUp, ChevronDown, ChevronLeft, ChevronRight, Menu, Printer, Search, X, Zap } from "lucide-react";
+import { ArrowUp, ChevronDown, ChevronLeft, ChevronRight, Menu, PanelLeftClose, PanelLeftOpen, Printer, Search, X, Zap } from "lucide-react";
 import { chapters, pad, screenId, screens, shortcuts, TOTAL_SCREENS } from "@/data/structure";
 import CommandPalette from "./CommandPalette";
 
 export default function Shell({ children }: { children: React.ReactNode }) {
   const [active, setActive] = useState(1);
   const [drawer, setDrawer] = useState(false);
+  // Menu lateral recolhido no desktop (preferência salva no navegador)
+  const [collapsed, setCollapsed] = useState(false);
+
+  useEffect(() => {
+    try {
+      setCollapsed(localStorage.getItem("decorar:menu-recolhido") === "1");
+    } catch {}
+  }, []);
+
+  const toggleCollapsed = useCallback(() => {
+    setCollapsed((c) => {
+      try {
+        localStorage.setItem("decorar:menu-recolhido", c ? "0" : "1");
+      } catch {}
+      return !c;
+    });
+  }, []);
   const [palette, setPalette] = useState(false);
   const [expanded, setExpanded] = useState<string | null>("c1");
   const manualExpand = useRef(false);
@@ -80,13 +97,16 @@ export default function Shell({ children }: { children: React.ReactNode }) {
       } else if (e.key === "End") {
         e.preventDefault();
         goTo(TOTAL_SCREENS);
+      } else if ((e.key === "m" || e.key === "M") && !e.ctrlKey && !e.metaKey && !e.altKey) {
+        if (window.innerWidth >= 1024) toggleCollapsed();
+        else setDrawer((d) => !d);
       } else if (e.key === "Escape") {
         setDrawer(false);
       }
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [active, goTo]);
+  }, [active, goTo, toggleCollapsed]);
 
   // Impressão: abre todos os painéis recolhidos
   useEffect(() => {
@@ -106,10 +126,11 @@ export default function Shell({ children }: { children: React.ReactNode }) {
     <>
       {/* Menu lateral */}
       <aside
-        className={`no-print fixed inset-y-0 left-0 z-50 flex w-[284px] flex-col bg-navy text-white transition-transform duration-300 lg:translate-x-0 ${
+        className={`no-print fixed inset-y-0 left-0 z-50 flex w-[284px] flex-col bg-navy text-white transition-transform duration-300 ${collapsed ? "lg:-translate-x-full" : "lg:translate-x-0"} ${
           drawer ? "translate-x-0 shadow-2xl" : "-translate-x-full"
         }`}
         aria-label="Navegação da apresentação"
+        inert={collapsed && !drawer ? true : undefined}
       >
         <div className="flex items-center justify-between border-b border-white/10 px-6 py-5">
           <button onClick={() => goTo(1)} className="block" aria-label="Voltar ao início">
@@ -117,6 +138,14 @@ export default function Shell({ children }: { children: React.ReactNode }) {
           </button>
           <button className="rounded-md p-1.5 text-white/70 hover:bg-white/10 lg:hidden" onClick={() => setDrawer(false)} aria-label="Fechar menu">
             <X size={18} />
+          </button>
+          <button
+            className="hidden rounded-md p-1.5 text-white/60 hover:bg-white/10 hover:text-white lg:block"
+            onClick={toggleCollapsed}
+            aria-label="Esconder menu lateral"
+            title="Esconder menu (M)"
+          >
+            <PanelLeftClose size={18} />
           </button>
         </div>
 
@@ -199,11 +228,21 @@ export default function Shell({ children }: { children: React.ReactNode }) {
       {drawer && <div className="no-print fixed inset-0 z-40 bg-navy/60 backdrop-blur-sm lg:hidden" onClick={() => setDrawer(false)} />}
 
       {/* Barra superior */}
-      <header className="no-print fixed top-0 right-0 left-0 z-30 h-14 border-b border-line bg-white/90 backdrop-blur-md lg:left-[284px]">
+      <header className={`no-print fixed top-0 right-0 left-0 z-30 h-14 border-b border-line bg-white/90 backdrop-blur-md transition-[left] duration-300 ${collapsed ? "lg:left-0" : "lg:left-[284px]"}`}>
         <div className="flex h-full items-center gap-3 px-3 sm:px-5">
           <button className="rounded-md p-2 hover:bg-mist lg:hidden" onClick={() => setDrawer(true)} aria-label="Abrir menu">
             <Menu size={18} />
           </button>
+          {collapsed && (
+            <button
+              className="hidden items-center gap-2 rounded-lg border border-line bg-white px-2.5 py-1.5 text-xs font-semibold text-ink hover:border-sky lg:flex"
+              onClick={toggleCollapsed}
+              aria-label="Mostrar menu lateral"
+              title="Mostrar menu (M)"
+            >
+              <PanelLeftOpen size={16} /> Menu
+            </button>
+          )}
           <div className="min-w-0 flex-1">
             <p className="truncate text-[10px] font-semibold tracking-[0.18em] text-origem uppercase">
               Capítulo {chapter.num} · {chapter.short}
@@ -253,7 +292,7 @@ export default function Shell({ children }: { children: React.ReactNode }) {
         <span className="sr-only" aria-live="polite">{`Tela ${active} de ${TOTAL_SCREENS}: ${current.title}. Progresso ${Math.round(progress)}%.`}</span>
       </header>
 
-      <main className="print-shift pt-14 lg:ml-[284px]">{children}</main>
+      <main className={`print-shift pt-14 transition-[margin] duration-300 ${collapsed ? "lg:ml-0" : "lg:ml-[284px]"}`}>{children}</main>
 
       {active > 2 && (
         <button

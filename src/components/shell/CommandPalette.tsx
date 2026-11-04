@@ -81,7 +81,7 @@ export default function CommandPalette({ onClose, onGo, active }: { onClose: () 
           })}
         </ul>
         <p className="border-t border-line px-4 py-2.5 text-[11px] text-mute">
-          Atalhos: <b>←</b> <b>→</b> navegam entre telas · <b>Home</b> volta ao início · <b>/</b> ou <b>Ctrl K</b> abre esta busca
+          Atalhos: <b>←</b> <b>→</b> navegam entre telas · <b>Home</b> volta ao início · <b>M</b> esconde o menu · <b>/</b> ou <b>Ctrl K</b> abre esta busca
         </p>
       </div>
     </div>
