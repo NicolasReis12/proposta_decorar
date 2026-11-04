@@ -7,6 +7,7 @@ import CompetitorChart from "@/components/charts/CompetitorChart";
 import TrafficDashboard from "@/components/charts/TrafficDashboard";
 import CreativesChart from "@/components/charts/CreativesChart";
 import Simulator from "@/components/interactive/Simulator";
+import HeroVideo from "@/components/ui/HeroVideo";
 import { assets, attributes, directions, opportunities, periodo, strengths } from "@/data/diagnostico";
 
 export default function Chapter1() {
@@ -17,13 +18,7 @@ export default function Chapter1() {
         n={1}
         tone="dark"
         hideHeader
-        background={
-          <>
-            <Image src="/images/sala-jantar-premium.jpg" alt="" fill priority sizes="100vw" className="object-cover object-center opacity-45" />
-            <div className="absolute inset-0 bg-gradient-to-r from-navy via-navy/85 to-navy/30" />
-            <div className="absolute inset-0 bg-gradient-to-t from-navy via-transparent to-navy/40" />
-          </>
-        }
+        background={<HeroVideo />}
       >
         <div className="flex min-h-[70vh] flex-col justify-between gap-10">
           <div className="flex flex-wrap items-center justify-between gap-6">

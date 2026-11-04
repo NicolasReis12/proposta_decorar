@@ -5,6 +5,7 @@ import Image from "next/image";
 import { ArrowUp, ChevronDown, ChevronLeft, ChevronRight, Menu, PanelLeftClose, PanelLeftOpen, Printer, Search, X, Zap } from "lucide-react";
 import { chapters, pad, screenId, screens, shortcuts, TOTAL_SCREENS } from "@/data/structure";
 import CommandPalette from "./CommandPalette";
+import BrandSymbol from "@/components/ui/BrandSymbol";
 
 export default function Shell({ children }: { children: React.ReactNode }) {
   const [active, setActive] = useState(1);
@@ -243,6 +244,16 @@ export default function Shell({ children }: { children: React.ReactNode }) {
               <PanelLeftOpen size={16} /> Menu
             </button>
           )}
+          {/* Logo sempre visível quando o menu lateral não está na tela */}
+          <button
+            onClick={() => goTo(1)}
+            className={`shrink-0 items-center gap-3 border-r border-line pr-3 ${collapsed ? "flex" : "flex lg:hidden"}`}
+            aria-label="Caio Marketeiro — voltar ao início"
+            title="Voltar ao início"
+          >
+            <BrandSymbol variant="gradiente" className="h-7 sm:hidden" />
+            <Image src="/brand/caio-gradiente.png" alt="Caio Marketeiro Neuromarketing" width={1803} height={513} className="hidden h-8 w-auto sm:block" />
+          </button>
           <div className="min-w-0 flex-1">
             <p className="truncate text-[10px] font-semibold tracking-[0.18em] text-origem uppercase">
               Capítulo {chapter.num} · {chapter.short}

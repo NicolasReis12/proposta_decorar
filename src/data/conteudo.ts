@@ -204,6 +204,17 @@ export const organicScripts: Script[] = [
 ];
 
 // ---------------------------------------------------------------------------
+// VÍDEO DE FUNDO DA ABERTURA (Tela 01)
+// Vídeo de banco de imagens (Pexels, licença gratuita para uso comercial):
+// https://www.pexels.com/video/a-couple-making-a-decision-4824110/
+// Para trocar por um vídeo real da Decorar, substitua public/videos/hero-loja.mp4.
+// ---------------------------------------------------------------------------
+export const heroVideo = {
+  src: "/videos/hero-loja.mp4",
+  fallbackImage: "/images/sala-jantar-premium.jpg",
+};
+
+// ---------------------------------------------------------------------------
 // VÍDEOS SELECIONADOS (Tela 23)
 // Para inserir/substituir: coloque o arquivo em /public/videos/ com o nome
 // indicado em `src`. Se o arquivo não existir, a tela mostra um espaço reservado.
