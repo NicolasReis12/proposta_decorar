@@ -11,3 +11,6 @@ next-env.d.ts
 /css
 /fonts
 /logo
+
+.vercel
+.env*
